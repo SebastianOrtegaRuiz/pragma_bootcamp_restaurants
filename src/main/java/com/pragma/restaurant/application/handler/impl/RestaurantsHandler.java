@@ -2,7 +2,9 @@ package com.pragma.restaurant.application.handler.impl;
 
 import com.pragma.restaurant.application.dto.request.RestaurantsRequestDto;
 import com.pragma.restaurant.application.dto.response.RestaurantsResponseDto;
+import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.handler.IRestaurantsHandler;
+import com.pragma.restaurant.application.mapper.feign.IUserFeignClient;
 import com.pragma.restaurant.application.mapper.restaurant.IRestaurantsRequestMapper;
 import com.pragma.restaurant.application.mapper.restaurant.IRestaurantsResponseMapper;
 import com.pragma.restaurant.domain.api.IRestaurantsServicePort;
@@ -22,6 +24,8 @@ public class RestaurantsHandler implements IRestaurantsHandler {
     private final IRestaurantsServicePort restaurantsServicePort;
     private final IRestaurantsRequestMapper restaurantsRequestMapper;
     private final IRestaurantsResponseMapper restaurantsResponseMapper;
+    private final IUserFeignClient userFeignClient;
+
     @Override
     public void saveRestaurants(RestaurantsRequestDto restaurantsRequestDto) {
         RestaurantsModel restaurantsModel = restaurantsRequestMapper.toRestaurants(restaurantsRequestDto);
@@ -31,5 +35,10 @@ public class RestaurantsHandler implements IRestaurantsHandler {
     @Override
     public Page<RestaurantsResponseDto> getAllRestaurants(int pages, int records) {
         return restaurantsServicePort.getAllRestaurants(pages, records).map(restaurantsResponseMapper::toResponse);
+    }
+
+    @Override
+    public UserResponseDto getUser(Long id, String autorization) {
+        return userFeignClient.getUser(id, autorization);
     }
 }

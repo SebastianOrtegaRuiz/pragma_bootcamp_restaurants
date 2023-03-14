@@ -3,6 +3,7 @@ package com.pragma.restaurant.infraestructure.input.rest;
 import com.pragma.restaurant.application.dto.request.RestaurantsRequestDto;
 import com.pragma.restaurant.application.dto.response.ResponsePagedDto;
 import com.pragma.restaurant.application.dto.response.RestaurantsResponseDto;
+import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.handler.IRestaurantsHandler;
 import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
 import com.pragma.restaurant.infraestructure.pagination.Pagination;
@@ -33,12 +34,21 @@ public class RestaurantsRestController {
 
     @ApiOperation(value = "Save a restaurant")
     @PostMapping("/")
-    public ResponseEntity<Void> saveRestaurants(@ApiParam(value = "require a JSON format Object to save a restaurant", required = true) @RequestBody RestaurantsRequestDto restaurantsRequestDto) {
+    public ResponseEntity<Void> saveRestaurants(@ApiParam(value = "require a JSON format Object to save a restaurant",
+                                                required = true) @RequestBody RestaurantsRequestDto restaurantsRequestDto,
+                                                @RequestHeader(value="Authorization") String authorization) {
+
         if(!utilities.validPhoneNumber(restaurantsRequestDto.getPhone())) {
             throw new NoValidNumber();
         }
-        restaurantsHandler.saveRestaurants(restaurantsRequestDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        UserResponseDto user = restaurantsHandler.getUser(restaurantsRequestDto.getId_owner(),
+                authorization.replace("Bearer ", ""));
+        if(user.getId_rol()==2) {
+            restaurantsHandler.saveRestaurants(restaurantsRequestDto);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "Get a list of all restaurants paginated by the parameters", response = List.class)
