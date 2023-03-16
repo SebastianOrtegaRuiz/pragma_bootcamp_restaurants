@@ -1,7 +1,8 @@
 package com.pragma.restaurant.application.handler.impl;
 
 import com.pragma.restaurant.application.dto.request.RestaurantsRequestDto;
-import com.pragma.restaurant.application.dto.response.RestaurantsResponseDto;
+import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsOwnerResponseDto;
+import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.handler.IRestaurantsHandler;
 import com.pragma.restaurant.application.mapper.feign.IUserFeignClient;
@@ -13,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +34,16 @@ public class RestaurantsHandler implements IRestaurantsHandler {
     @Override
     public Page<RestaurantsResponseDto> getAllRestaurants(int pages, int records) {
         return restaurantsServicePort.getAllRestaurants(pages, records).map(restaurantsResponseMapper::toResponse);
+    }
+
+    @Override
+    public RestaurantsResponseDto getRestaurantsById(Long id) {
+        return restaurantsResponseMapper.toResponse(restaurantsServicePort.getRestaurantsById(id));
+    }
+
+    @Override
+    public RestaurantsOwnerResponseDto getRestaurantsOwnerById(Long id) {
+        return restaurantsResponseMapper.toResponseOwner(restaurantsServicePort.getRestaurantsById(id));
     }
 
     @Override

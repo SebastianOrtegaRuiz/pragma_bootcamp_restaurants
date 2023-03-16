@@ -13,4 +13,8 @@ public interface IUserFeignClient {
     UserResponseDto getUser(@PathVariable("id") Long id,
                             @RequestHeader(value = "Authorization", required = true) String authorization);
 
+    @GetMapping(value = "/users/byEmail/{email}")
+    UserResponseDto getUserByEmail(@PathVariable("email") String email,
+                            @RequestHeader(value = "Authorization", required = true) String authorization);
+
 }

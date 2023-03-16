@@ -7,8 +7,14 @@ import com.pragma.restaurant.infraestructure.output.entity.CategoryEntity;
 import com.pragma.restaurant.infraestructure.output.mapper.ICategoryEntityMapper;
 import com.pragma.restaurant.infraestructure.output.repository.ICategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -26,11 +32,22 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
     }
 
     @Override
-    public List<CategoryModel> getAllCategory() {
-        List<CategoryEntity> entityList = categoryRepository.findAll();
-        if (entityList.isEmpty()) {
-            throw new NoDataFoundException();
+    public Page<CategoryModel> getAllCategory(int page, int records) {
+        try {
+            List<Sort.Order> orders = new ArrayList<Sort.Order>();
+
+            Sort.Order order = new Sort.Order(Sort.Direction.ASC, "name");
+            orders.add(order);
+
+            Pageable paging = PageRequest.of(page - 1, records, Sort.by(orders));
+
+            Page<CategoryModel> pageCategory = categoryRepository.findAll(paging).map(categoryEntityMapper::toCategoryModel);;
+            if (pageCategory.getContent().isEmpty()) {
+                throw new NoDataFoundException();
+            }
+            return pageCategory;
+        } catch (HttpStatusCodeException e) {
+            return null;
         }
-        return categoryEntityMapper.toCategoryModelList(entityList);
     }
 }

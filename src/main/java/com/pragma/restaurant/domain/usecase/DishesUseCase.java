@@ -16,18 +16,27 @@ public class DishesUseCase implements IDishesServicePort {
 
     @Override
     public void saveDishes(DishesModel dishesModel) {
+        dishesModel.setActive(true);
         dishesPersistencePort.saveDishes(dishesModel);
     }
 
-    /*@Override
+    @Override
     public void updateDishes(DishesModel dishesModel) {
-        if(dishesModel.getActive() == null)
         dishesPersistencePort.updateDishes(dishesModel);
-        dishesPersistencePort.saveDishes(dishesModel);
-    }*/
+    }
+
+    @Override
+    public void changeStatusDishes(DishesModel dishesModel) {
+        dishesPersistencePort.changeStatusDishes(dishesModel);
+    }
 
     @Override
     public List<DishesModel> getAllDishes() {
         return dishesPersistencePort.getAllDishes();
+    }
+
+    @Override
+    public DishesModel getDishesById(Long id) {
+        return dishesPersistencePort.getDishesById(id);
     }
 }

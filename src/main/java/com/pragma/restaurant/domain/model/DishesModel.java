@@ -10,7 +10,9 @@ public class DishesModel {
     private String url_image;
     private Boolean active;
 
-    public DishesModel(Long id, String name, Long id_category, String description, int price, Long id_restaurant, String url_image, Boolean active) {
+    private RestaurantsModel restaurantsModel;
+
+    public DishesModel(Long id, String name, Long id_category, String description, int price, Long id_restaurant, String url_image, Boolean active, RestaurantsModel restaurantsModel) {
         this.id = id;
         this.name = name;
         this.id_category = id_category;
@@ -19,6 +21,7 @@ public class DishesModel {
         this.id_restaurant = id_restaurant;
         this.url_image = url_image;
         this.active = active;
+        this.restaurantsModel = restaurantsModel;
     }
 
     public Long getId() {
@@ -51,6 +54,12 @@ public class DishesModel {
 
     public Boolean getActive() {
         return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+    public RestaurantsModel getRestaurantsModel() {
+        return restaurantsModel;
     }
 
 }

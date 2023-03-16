@@ -8,6 +8,7 @@ import com.pragma.restaurant.application.mapper.category.ICategoryResponseMapper
 import com.pragma.restaurant.domain.api.ICategoryServicePort;
 import com.pragma.restaurant.domain.model.CategoryModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,7 @@ public class CategoryHandler implements ICategoryHandler {
     }
 
     @Override
-    public List<CategoryResponseDto> getAllCategories() {
-        return categoryResponseMapper.toResponseList(categoryServicePort.getAllCategory());
+    public Page<CategoryResponseDto> getAllCategories(int page, int records) {
+        return categoryServicePort.getAllCategory(page, records).map(categoryResponseMapper::toResponse);
     }
 }

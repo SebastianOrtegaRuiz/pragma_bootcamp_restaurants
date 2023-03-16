@@ -2,7 +2,8 @@ package com.pragma.restaurant.infraestructure.input.rest;
 
 import com.pragma.restaurant.application.dto.request.RestaurantsRequestDto;
 import com.pragma.restaurant.application.dto.response.ResponsePagedDto;
-import com.pragma.restaurant.application.dto.response.RestaurantsResponseDto;
+import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsOwnerResponseDto;
+import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.handler.IRestaurantsHandler;
 import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
@@ -41,8 +42,12 @@ public class RestaurantsRestController {
         if(!utilities.validPhoneNumber(restaurantsRequestDto.getPhone())) {
             throw new NoValidNumber();
         }
-        UserResponseDto user = restaurantsHandler.getUser(restaurantsRequestDto.getId_owner(),
-                authorization.replace("Bearer ", ""));
+
+        if(!utilities.getRol(authorization).equals("ADMINISTRADOR")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
+        UserResponseDto user = restaurantsHandler.getUser(restaurantsRequestDto.getId_owner(), authorization);
         if(user.getId_rol()==2) {
             restaurantsHandler.saveRestaurants(restaurantsRequestDto);
             return new ResponseEntity<>(HttpStatus.CREATED);
@@ -61,6 +66,12 @@ public class RestaurantsRestController {
         ResponsePagedDto<RestaurantsResponseDto> responsePagedDto = pagination.paginate(page, restaurantsDto);
 
         return ResponseEntity.ok(responsePagedDto);
+    }
+
+    @ApiOperation(value = "Get one specific restaurant by id", response = RestaurantsOwnerResponseDto.class)
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantsResponseDto> getRestaurantsById(@ApiParam(value = "id to search for a specific restaurant", required = true) @PathVariable("id") Long id) {
+        return ResponseEntity.ok(restaurantsHandler.getRestaurantsById(id));
     }
 
 }
