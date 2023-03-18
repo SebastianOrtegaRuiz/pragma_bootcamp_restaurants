@@ -1,17 +1,17 @@
 package com.pragma.restaurant.application.handler.impl;
 
 import com.pragma.restaurant.application.dto.request.CategoryRequestDto;
-import com.pragma.restaurant.application.dto.response.CategoryResponseDto;
+import com.pragma.restaurant.application.dto.response.category.CategoryByRestaurantsResponseDto;
+import com.pragma.restaurant.application.dto.response.category.CategoryResponseDto;
 import com.pragma.restaurant.application.handler.ICategoryHandler;
 import com.pragma.restaurant.application.mapper.category.ICategoryRequestMapper;
 import com.pragma.restaurant.application.mapper.category.ICategoryResponseMapper;
 import com.pragma.restaurant.domain.api.ICategoryServicePort;
 import com.pragma.restaurant.domain.model.CategoryModel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +27,12 @@ public class CategoryHandler implements ICategoryHandler {
     }
 
     @Override
-    public List<CategoryResponseDto> getAllCategories() {
-        return categoryResponseMapper.toResponseList(categoryServicePort.getAllCategory());
+    public Page<CategoryResponseDto> getAllCategories(int page, int records) {
+        return categoryServicePort.getAllCategory(page, records).map(categoryResponseMapper::toResponse);
+    }
+
+    @Override
+    public Page<CategoryByRestaurantsResponseDto> getAllCategoriesByRestaurant() {
+        return categoryServicePort.getAllCategoryByRestaurant().map(categoryResponseMapper::toResponseByRestaurants);
     }
 }

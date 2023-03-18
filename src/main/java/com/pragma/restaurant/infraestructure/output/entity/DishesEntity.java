@@ -57,4 +57,12 @@ public class DishesEntity {
     @BooleanFlag
     @Column(nullable = false)
     private Boolean active;
+
+    @OneToOne
+    @JoinColumn(name = "id_restaurant", referencedColumnName = "id", insertable = false, updatable = false)
+    private RestaurantsEntity restaurantsEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "id_category", insertable = false, updatable = false)
+    private CategoryEntity categoryEntity;
 }

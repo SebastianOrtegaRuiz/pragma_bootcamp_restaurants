@@ -1,7 +1,7 @@
 package com.pragma.restaurant.application.mapper.restaurantemployee;
 
 import com.pragma.restaurant.application.dto.request.Restaurant_EmployeeRequestDto;
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

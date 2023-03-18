@@ -44,8 +44,7 @@ public class RestaurantsJpaAdapter implements IRestaurantsPersistencePort {
 
             Pageable paging = PageRequest.of(pages - 1, records, Sort.by(orders));
 
-            Page<RestaurantsModel> pageRestaurants;
-            pageRestaurants = restaurantsRepository.findAll(paging).map(restaurantsEntityMapper::toRestaurantsModel);
+            Page<RestaurantsModel> pageRestaurants = restaurantsRepository.findAll(paging).map(restaurantsEntityMapper::toRestaurantsModel);
 
             if (pageRestaurants.getContent().isEmpty()) {
                 throw new NoDataFoundException();
@@ -56,5 +55,11 @@ public class RestaurantsJpaAdapter implements IRestaurantsPersistencePort {
         } catch (HttpStatusCodeException e) {
             return null;
         }
+    }
+
+    @Override
+    public RestaurantsModel getRestaurantById(Long id) {
+        RestaurantsEntity restaurantEntity = restaurantsRepository.findById(id).orElse(null);
+        return restaurantsEntityMapper.toRestaurantsModel(restaurantEntity);
     }
 }

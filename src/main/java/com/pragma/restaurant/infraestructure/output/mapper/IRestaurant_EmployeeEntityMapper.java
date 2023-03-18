@@ -1,6 +1,6 @@
 package com.pragma.restaurant.infraestructure.output.mapper;
 
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 import com.pragma.restaurant.infraestructure.output.entity.restaurant_employee.Restaurant_EmployeeEntity;
 import org.mapstruct.Mapper;
 

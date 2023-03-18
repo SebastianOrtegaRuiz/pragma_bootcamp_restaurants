@@ -1,6 +1,6 @@
 package com.pragma.restaurant.infraestructure.output.adapter;
 
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 import com.pragma.restaurant.domain.spi.IRestaurant_EmployeePersistencePort;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
 import com.pragma.restaurant.infraestructure.output.entity.restaurant_employee.Restaurant_EmployeeEntity;

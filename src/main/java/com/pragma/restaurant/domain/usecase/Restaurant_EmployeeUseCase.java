@@ -1,7 +1,7 @@
 package com.pragma.restaurant.domain.usecase;
 
 import com.pragma.restaurant.domain.api.IRestaurant_EmployeeServicePort;
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 import com.pragma.restaurant.domain.spi.IRestaurant_EmployeePersistencePort;
 
 import java.util.List;

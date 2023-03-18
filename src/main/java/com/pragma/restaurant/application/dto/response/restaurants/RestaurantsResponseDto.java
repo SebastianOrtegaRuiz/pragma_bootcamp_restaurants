@@ -1,4 +1,4 @@
-package com.pragma.restaurant.application.dto.response;
+package com.pragma.restaurant.application.dto.response.restaurants;
 
 import lombok.Getter;
 import lombok.Setter;

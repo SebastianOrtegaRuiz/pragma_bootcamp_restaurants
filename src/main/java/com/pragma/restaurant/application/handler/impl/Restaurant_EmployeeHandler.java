@@ -6,7 +6,8 @@ import com.pragma.restaurant.application.handler.IRestaurant_EmployeeHandler;
 import com.pragma.restaurant.application.mapper.restaurantemployee.IRestaurant_EmployeeRequestMapper;
 import com.pragma.restaurant.application.mapper.restaurantemployee.IRestaurant_EmployeeResponseMapper;
 import com.pragma.restaurant.domain.api.IRestaurant_EmployeeServicePort;
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeIdModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class Restaurant_EmployeeHandler implements IRestaurant_EmployeeHandler {
     @Override
     public void saveRestaurant_Employee(Restaurant_EmployeeRequestDto restaurant_employeeRequestDto) {
         Restaurant_EmployeeModel restaurant_employeeModel = restaurant_employeeRequestMapper.toRestaurant_Employee(restaurant_employeeRequestDto);
+        restaurant_employeeModel.setId(new Restaurant_EmployeeIdModel(restaurant_employeeRequestDto.getId_restaurant(), restaurant_employeeRequestDto.getId_person()));
         restaurant_employeeServicePort.saveRestaurant_Employee(restaurant_employeeModel);
     }
 

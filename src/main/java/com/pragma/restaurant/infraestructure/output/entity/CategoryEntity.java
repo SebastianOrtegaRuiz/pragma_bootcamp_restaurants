@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -30,5 +31,8 @@ public class CategoryEntity {
     @NotEmpty(message = "Description cannot be empty")
     @Column(length = 150, nullable = false)
     private String description;
+
+    @OneToMany(mappedBy="categoryEntity")
+    private List<DishesEntity> dishesEntity;
 
 }

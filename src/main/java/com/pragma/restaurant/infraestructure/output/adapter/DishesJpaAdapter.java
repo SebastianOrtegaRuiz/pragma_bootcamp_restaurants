@@ -26,11 +26,35 @@ public class DishesJpaAdapter implements IDishesPersistencePort {
     }
 
     @Override
+    public DishesModel updateDishes(DishesModel dishesModel) {
+        DishesEntity dishesEntity = dishesRepository.save(dishesEntityMapper.toEntity(dishesModel));
+        if(dishesEntity == null) {
+            throw new NoDataFoundException();
+        }
+        return dishesEntityMapper.toDishesModel(dishesEntity);
+    }
+
+    @Override
+    public DishesModel changeStatusDishes(DishesModel dishesModel) {
+        DishesEntity dishesEntity = dishesRepository.save(dishesEntityMapper.toEntity(dishesModel));
+        if(dishesEntity == null) {
+            throw new NoDataFoundException();
+        }
+        return dishesEntityMapper.toDishesModel(dishesEntity);
+    }
+
+    @Override
     public List<DishesModel> getAllDishes() {
         List<DishesEntity> entityList = dishesRepository.findAll();
         if (entityList.isEmpty()) {
             throw new NoDataFoundException();
         }
         return dishesEntityMapper.toDishesModelList(entityList);
+    }
+
+    @Override
+    public DishesModel getDishesById(Long id) {
+        DishesEntity entityList = dishesRepository.findById(id).orElse(null);
+        return dishesEntityMapper.toDishesModel(entityList);
     }
 }

@@ -9,4 +9,5 @@ public class Restaurant_EmployeeRequestDto {
     private Long id_restaurant;
     private Long id_person;
     private String field;
+    private UsersRequestDto usersRequestDto;
 }

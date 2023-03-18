@@ -1,6 +1,6 @@
 package com.pragma.restaurant.domain.spi;
 
-import com.pragma.restaurant.domain.model.Restaurant_EmployeeModel;
+import com.pragma.restaurant.domain.model.restaurant_Employee.Restaurant_EmployeeModel;
 
 import java.util.List;
 

@@ -1,11 +1,11 @@
-package com.pragma.restaurant.application.dto.response;
+package com.pragma.restaurant.application.dto.request.dishes;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class DishesResponseDto {
+public class DishesRequestDto {
     private String name;
     private Long id_category;
     private String description;
@@ -13,4 +13,5 @@ public class DishesResponseDto {
     private Long id_restaurant;
     private String url_image;
     private Boolean active;
+    //private DishesOrdersEntity unit;
 }
