@@ -4,6 +4,7 @@ import com.pragma.restaurant.application.dto.response.OrdersResponseDto;
 import com.pragma.restaurant.domain.api.IOrdersServicePort;
 import com.pragma.restaurant.domain.model.OrdersModel;
 import com.pragma.restaurant.domain.spi.IOrdersPersistencePort;
+import org.springframework.data.domain.Page;
 
 import java.util.Date;
 import java.util.List;
@@ -24,12 +25,22 @@ public class OrdersUseCase implements IOrdersServicePort {
     }
 
     @Override
-    public List<OrdersModel> getAllOrders() {
-        return ordersPersistencePort.getAllOrders();
+    public OrdersModel updateOrders(OrdersModel ordersModel) {
+        return ordersPersistencePort.updateOrders(ordersModel);
+    }
+
+    @Override
+    public Page<OrdersModel> getAllOrders(int pages, int records, String status) {
+        return ordersPersistencePort.getAllOrders(pages, records, status);
     }
 
     @Override
     public List<OrdersModel> getOrdersByClientAndStatus(Long id) {
         return ordersPersistencePort.getOrdersByClientAndStatus(id);
+    }
+
+    @Override
+    public OrdersModel getOrdersById(Long id) {
+        return ordersPersistencePort.getOrdersById(id);
     }
 }

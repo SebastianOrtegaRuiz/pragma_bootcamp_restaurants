@@ -1,5 +1,7 @@
 package com.pragma.restaurant.infraestructure.output.entity.dishes_orders;
 
+import com.pragma.restaurant.infraestructure.output.entity.CategoryEntity;
+import com.pragma.restaurant.infraestructure.output.entity.OrdersEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

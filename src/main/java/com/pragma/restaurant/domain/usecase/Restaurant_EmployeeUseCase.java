@@ -23,4 +23,14 @@ public class Restaurant_EmployeeUseCase implements IRestaurant_EmployeeServicePo
     public List<Restaurant_EmployeeModel> getAllRestaurant_Employee() {
         return restaurant_employeePersistencePort.getAllRestaurant_Employee();
     }
+
+    @Override
+    public Restaurant_EmployeeModel getRestaurant_EmployeeById_Person(Long id_person,  Long id_restaurant) {
+        return restaurant_employeePersistencePort.getRestaurant_EmployeeById_Person(id_person, id_restaurant);
+    }
+
+    @Override
+    public Restaurant_EmployeeModel getRestaurant_EmployeeById(Long id_person) {
+        return restaurant_employeePersistencePort.getRestaurant_EmployeeById(id_person);
+    }
 }

@@ -32,4 +32,15 @@ public class Restaurant_EmployeeHandler implements IRestaurant_EmployeeHandler {
     public List<Restaurant_EmployeeResponseDto> getAllRestaurant_Employee() {
         return restaurant_employeeResponseMapper.toResponseList(restaurant_employeeServicePort.getAllRestaurant_Employee());
     }
+
+    @Override
+    public Restaurant_EmployeeResponseDto getRestaurant_EmployeeById_Person(Long id_person,  Long id_restaurant) {
+        return restaurant_employeeResponseMapper.toResponse(restaurant_employeeServicePort.getRestaurant_EmployeeById_Person(id_person, id_restaurant));
+    }
+
+    @Override
+    public Restaurant_EmployeeResponseDto getRestaurant_EmployeeById(Long id_person) {
+        return restaurant_employeeResponseMapper.toResponse(restaurant_employeeServicePort.getRestaurant_EmployeeById(id_person));
+    }
+
 }

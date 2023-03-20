@@ -1,5 +1,6 @@
 package com.pragma.restaurant.infraestructure.output.entity;
 
+import com.pragma.restaurant.infraestructure.output.entity.dishes_orders.Dishes_OrdersEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,13 +38,11 @@ public class OrdersEntity {
     @Column(length = 14, nullable = false)
     private String status;
 
-    @NotNull
-    @Min(1)
-    @Column(nullable = false)
     private Long id_chef;
 
     @NotNull
     @Min(1)
     @Column(nullable = false)
     private Long id_restaurant;
+
 }

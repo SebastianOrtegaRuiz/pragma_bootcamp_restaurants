@@ -33,4 +33,16 @@ public class Restaurant_EmployeeJpaAdapter implements IRestaurant_EmployeePersis
         }
         return restaurant_employeeEntityMapper.toRestaurant_EmployeeModelList(entityList);
     }
+
+    @Override
+    public Restaurant_EmployeeModel getRestaurant_EmployeeById_Person(Long id_person, Long id_restaurant) {
+        IRestaurant_EmployeeRepository.Resp restaurant_EmployeeEntity = restaurant_employeeRepository.findByid_person(id_person, id_restaurant);
+        return restaurant_employeeEntityMapper.toRestaurant_EmployeeRespModel(restaurant_EmployeeEntity);
+    }
+
+    @Override
+    public  Restaurant_EmployeeModel getRestaurant_EmployeeById(Long id_person) {
+        IRestaurant_EmployeeRepository.Resp restaurant_EmployeeEntity = restaurant_employeeRepository.findById(id_person);
+        return restaurant_employeeEntityMapper.toRestaurant_EmployeeRespModel(restaurant_EmployeeEntity);
+    }
 }

@@ -13,6 +13,8 @@ public interface IOrdersEntityMapper {
     OrdersEntity toEntity(OrdersModel order);
     OrdersModel toOrdersModel(OrdersEntity ordersEntity);
 
+    OrdersModel toOrdersPageModel(IOrdersRepository.Resp resp);
+
     List<OrdersModel> toOrdersModelList(List<OrdersEntity> ordersEntityList);
 
     List<OrdersModel> toOrdersModeResplList(List<IOrdersRepository.Resp> ordersEntityList);
