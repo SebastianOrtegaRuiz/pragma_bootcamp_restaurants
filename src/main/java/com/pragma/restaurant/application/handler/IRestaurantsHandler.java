@@ -1,7 +1,7 @@
 package com.pragma.restaurant.application.handler;
 
 import com.pragma.restaurant.application.dto.request.RestaurantsRequestDto;
-import com.pragma.restaurant.application.dto.request.UsersRequestDto;
+import com.pragma.restaurant.application.dto.request.feign.UsersRequestDto;
 import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsOwnerResponseDto;
 import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;

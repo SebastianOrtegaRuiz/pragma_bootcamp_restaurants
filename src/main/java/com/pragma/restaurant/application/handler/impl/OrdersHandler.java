@@ -1,7 +1,6 @@
 package com.pragma.restaurant.application.handler.impl;
 
-import com.pragma.restaurant.application.dto.request.OrdersRequestDto;
-import com.pragma.restaurant.application.dto.request.OrdersUpdateRequestDto;
+import com.pragma.restaurant.application.dto.request.orders.OrdersRequestDto;
 import com.pragma.restaurant.application.dto.response.OrdersResponseDto;
 import com.pragma.restaurant.application.handler.IOrdersHandler;
 import com.pragma.restaurant.application.mapper.orders.IOrdersRequestMapper;
@@ -30,8 +29,8 @@ public class OrdersHandler implements IOrdersHandler {
     }
 
     @Override
-    public OrdersResponseDto updateOrders(OrdersUpdateRequestDto ordersUpdateRequestDto) {
-        OrdersModel OrdersModel = ordersRequestMapper.toOrdersUpdate(ordersUpdateRequestDto);
+    public OrdersResponseDto updateOrders(OrdersResponseDto ordersResponseDto) {
+        OrdersModel OrdersModel = ordersRequestMapper.toOrdersUpdate(ordersResponseDto);
         return ordersResponseMapper.toResponse(ordersServicePort.updateOrders(OrdersModel));
     }
 

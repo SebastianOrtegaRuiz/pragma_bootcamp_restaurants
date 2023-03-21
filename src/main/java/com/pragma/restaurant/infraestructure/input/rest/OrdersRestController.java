@@ -1,19 +1,16 @@
 package com.pragma.restaurant.infraestructure.input.rest;
 
-import com.pragma.restaurant.application.dto.request.AssingOrdersDto;
+import com.pragma.restaurant.application.dto.request.orders.AssignOrdersDto;
 import com.pragma.restaurant.application.dto.request.Dishes_OrdersRequestDto;
-import com.pragma.restaurant.application.dto.request.OrdersRequestDto;
-import com.pragma.restaurant.application.dto.request.OrdersUpdateRequestDto;
+import com.pragma.restaurant.application.dto.request.orders.OrdersRequestDto;
 import com.pragma.restaurant.application.dto.response.OrdersResponseDto;
 import com.pragma.restaurant.application.dto.response.ResponsePagedDto;
 import com.pragma.restaurant.application.dto.response.Restaurant_EmployeeResponseDto;
 import com.pragma.restaurant.application.dto.response.dishes.DishesResponseDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsOwnerResponseDto;
-import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsResponseDto;
 import com.pragma.restaurant.application.handler.*;
-import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
-import com.pragma.restaurant.infraestructure.output.response.Response;
+import com.pragma.restaurant.domain.response.Response;
 import com.pragma.restaurant.infraestructure.pagination.Pagination;
 import com.pragma.restaurant.infraestructure.utilities.IUtilities;
 import io.swagger.annotations.Api;
@@ -114,7 +111,7 @@ public class OrdersRestController {
     @GetMapping("/{page}/{records}/{id_restaurant}/{status}")
     public ResponseEntity<ResponsePagedDto<OrdersResponseDto>> getAllOrders(@ApiParam(value = "require an int for specified the page thats needs ", required = true) @PathVariable("page") int page,
                                                                             @ApiParam(value = "require an int for specified the number of records per page", required = true) @PathVariable("records") int records,
-                                                                            @ApiParam(value = "require an string for specified the restaurant for filter", required = true) @PathVariable("id_restaurant") Long id_restaurant,
+                                                                            @ApiParam(value = "require an int for specified the restaurant for filter", required = true) @PathVariable("id_restaurant") Long id_restaurant,
                                                                             @ApiParam(value = "require an string for specified the filter to applied", required = true) @PathVariable("status") String status,
                                                                             @RequestHeader(value="Authorization") String authorization) {
 
@@ -152,9 +149,9 @@ public class OrdersRestController {
     }
 
     @ApiOperation(value = "assingOrders to a employee", response = OrdersResponseDto.class)
-    @PutMapping("/assingOrders")
+    @PutMapping("/assignOrders")
     public ResponseEntity<Response> assingOrders(@ApiParam(value = "dto with the id's to assing", required = true)
-                                             @RequestBody List<AssingOrdersDto> assingOrdersDto,
+                                             @RequestBody List<AssignOrdersDto> assingOrdersDto,
                                              @RequestHeader(value="Authorization") String authorization) {
 
         if(!utilities.getRol(authorization).equals("EMPLEADO")){
@@ -173,24 +170,16 @@ public class OrdersRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("El usuario no existe como empleado"));
         }
 
-        System.out.println(restaurant_EmployeeResponseDto.getId_restaurant());
-
-        for(AssingOrdersDto assingOrder: assingOrdersDto){
-            OrdersResponseDto ordersResponseDto = ordersHandler.getOrdersById(assingOrder.getId_order());
+        for(AssignOrdersDto assignOrder: assingOrdersDto){
+            OrdersResponseDto ordersResponseDto = ordersHandler.getOrdersById(assignOrder.getId_order());
 
             if(ordersResponseDto==null){
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("El pedido " + assingOrder.getId_order() + " no existe"));
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("El pedido " + assignOrder.getId_order() + " no existe"));
             }else if(ordersResponseDto.getId_restaurant()!=restaurant_EmployeeResponseDto.getId_restaurant()){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("El pedido no pertenece a su restaurante"));
             }else{
-                OrdersUpdateRequestDto ordersUpdateRequestDto = new OrdersUpdateRequestDto();
-                ordersUpdateRequestDto.setId(ordersResponseDto.getId());
-                ordersUpdateRequestDto.setStatus(ordersResponseDto.getStatus());
-                ordersUpdateRequestDto.setDate(ordersResponseDto.getDate());
-                ordersUpdateRequestDto.setId_chef(user.getId());
-                ordersUpdateRequestDto.setId_restaurant(ordersResponseDto.getId_restaurant());
-                ordersUpdateRequestDto.setId_client(ordersResponseDto.getId_client());
-                ordersHandler.updateOrders(ordersUpdateRequestDto);
+                ordersResponseDto.setId_chef(user.getId());
+                ordersHandler.updateOrders(ordersResponseDto);
             }
         }
 
@@ -205,7 +194,7 @@ public class OrdersRestController {
                                                  @RequestHeader(value="Authorization") String authorization) {
 
         if(!utilities.getRol(authorization).equals("EMPLEADO") &&
-           !utilities.getRol(authorization).equals("CLIENTE")){
+                !utilities.getRol(authorization).equals("CLIENTE")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
@@ -216,28 +205,21 @@ public class OrdersRestController {
         }
 
         OrdersResponseDto ordersResponseDto = ordersHandler.getOrdersById(id);
-        OrdersUpdateRequestDto ordersUpdateRequestDto = new OrdersUpdateRequestDto();
-        ordersUpdateRequestDto.setId(ordersResponseDto.getId());
-        ordersUpdateRequestDto.setStatus(ordersResponseDto.getStatus());
-        ordersUpdateRequestDto.setDate(ordersResponseDto.getDate());
-        ordersUpdateRequestDto.setId_chef(ordersResponseDto.getId_chef());
-        ordersUpdateRequestDto.setId_restaurant(ordersResponseDto.getId_restaurant());
-        ordersUpdateRequestDto.setId_client(ordersResponseDto.getId_client());
 
         if(status.equals("entregado") && ordersResponseDto.getStatus().equals("listo")){
-            ordersUpdateRequestDto.setStatus(status);
+            ordersResponseDto.setStatus(status);
         }else if(status.equals("listo") && ordersResponseDto.getStatus().equals("entregado")){
-            ordersUpdateRequestDto.setStatus(status);
+            ordersResponseDto.setStatus(status);
         }else if(status.equals("cancelado") && ordersResponseDto.getStatus().equals("pendiente")) {
-            ordersUpdateRequestDto.setStatus(status);
+            ordersResponseDto.setStatus(status);
         } else if(status.equals("cancelado") && !ordersResponseDto.getStatus().equals("pendiente")){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(" Lo sentimos, tu pedido ya está en preparación y no puede cancelarse"));
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("El pedido " + id + " tiene estado "
-                                                                      + ordersResponseDto.getStatus() + " no puede ser cambiado a " + status));
+                    + ordersResponseDto.getStatus() + " no puede ser cambiado a " + status));
         }
 
-        ordersHandler.updateOrders(ordersUpdateRequestDto);
+        ordersHandler.updateOrders(ordersResponseDto);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }

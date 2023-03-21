@@ -6,7 +6,6 @@ import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsOwn
 import com.pragma.restaurant.application.dto.response.restaurants.RestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import com.pragma.restaurant.application.handler.IRestaurantsHandler;
-import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
 import com.pragma.restaurant.infraestructure.pagination.Pagination;
 import com.pragma.restaurant.infraestructure.utilities.IUtilities;
 import io.swagger.annotations.Api;
@@ -38,10 +37,6 @@ public class RestaurantsRestController {
     public ResponseEntity<Void> saveRestaurants(@ApiParam(value = "require a JSON format Object to save a restaurant",
                                                 required = true) @RequestBody RestaurantsRequestDto restaurantsRequestDto,
                                                 @RequestHeader(value="Authorization") String authorization) {
-
-        if(!utilities.validPhoneNumber(restaurantsRequestDto.getPhone())) {
-            throw new NoValidNumber();
-        }
 
         if(!utilities.getRol(authorization).equals("ADMINISTRADOR")){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);

@@ -7,6 +7,7 @@ import com.pragma.restaurant.domain.validations.RestaurantValidator;
 import com.pragma.restaurant.infraestructure.output.adapter.*;
 import com.pragma.restaurant.infraestructure.output.mapper.*;
 import com.pragma.restaurant.infraestructure.output.repository.*;
+import com.pragma.restaurant.infraestructure.output.repository.orders.IOrdersRepository;
 import com.pragma.restaurant.infraestructure.utilities.IUtilities;
 import com.pragma.restaurant.infraestructure.utilities.Utilities;
 import lombok.RequiredArgsConstructor;

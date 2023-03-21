@@ -1,12 +1,11 @@
 package com.pragma.restaurant.infraestructure.output.adapter;
 
 import com.pragma.restaurant.domain.model.OrdersModel;
-import com.pragma.restaurant.domain.model.RestaurantsModel;
 import com.pragma.restaurant.domain.spi.IOrdersPersistencePort;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
 import com.pragma.restaurant.infraestructure.output.entity.OrdersEntity;
 import com.pragma.restaurant.infraestructure.output.mapper.IOrdersEntityMapper;
-import com.pragma.restaurant.infraestructure.output.repository.IOrdersRepository;
+import com.pragma.restaurant.infraestructure.output.repository.orders.IOrdersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

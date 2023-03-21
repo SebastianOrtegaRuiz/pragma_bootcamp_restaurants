@@ -1,4 +1,4 @@
-package com.pragma.restaurant.infraestructure.output.response;
+package com.pragma.restaurant.domain.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

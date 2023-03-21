@@ -3,13 +3,10 @@ package com.pragma.restaurant.infraestructure.output.adapter;
 import com.pragma.restaurant.domain.model.RestaurantsModel;
 import com.pragma.restaurant.domain.spi.IRestaurantsPersistencePort;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
-import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
 import com.pragma.restaurant.infraestructure.output.entity.RestaurantsEntity;
 import com.pragma.restaurant.infraestructure.output.mapper.IRestaurantsEntityMapper;
 import com.pragma.restaurant.infraestructure.output.repository.IRestaurantsRepository;
-import com.pragma.restaurant.infraestructure.utilities.IUtilities;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.data.domain.Page;
@@ -17,9 +14,7 @@ import org.springframework.data.domain.PageRequest;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RequiredArgsConstructor
 public class RestaurantsJpaAdapter implements IRestaurantsPersistencePort {

@@ -1,5 +1,6 @@
 package com.pragma.restaurant.application.dto.request;
 
+import com.pragma.restaurant.application.dto.request.feign.UsersRequestDto;
 import lombok.Getter;
 import lombok.Setter;
 

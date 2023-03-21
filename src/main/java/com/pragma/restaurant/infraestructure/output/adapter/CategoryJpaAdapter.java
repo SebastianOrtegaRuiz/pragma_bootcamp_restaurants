@@ -1,6 +1,5 @@
 package com.pragma.restaurant.infraestructure.output.adapter;
 
-import com.pragma.restaurant.domain.model.CategoryByRestaurantsModel;
 import com.pragma.restaurant.domain.model.CategoryModel;
 import com.pragma.restaurant.domain.spi.ICategoryPersistencePort;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
@@ -54,26 +53,4 @@ public class CategoryJpaAdapter implements ICategoryPersistencePort {
         }
     }
 
-    @Override
-    public Page<CategoryByRestaurantsModel> getAllCategoryByRestauran() {
-        try {
-
-            List<Sort.Order> orders = new ArrayList<Sort.Order>();
-
-            Sort.Order order = new Sort.Order(Sort.Direction.ASC, "name");
-            orders.add(order);
-
-            Pageable paging = PageRequest.of(1, 5, Sort.by(orders));
-
-            Page<CategoryByRestaurantsModel> pageCategory = categoryRepository.findAllByRestaurant(paging).map(categoryEntityMapper::toCategoryIdModel);
-
-            if (pageCategory.getContent().isEmpty()) {
-                throw new NoDataFoundException();
-            }
-
-            return pageCategory;
-        } catch (HttpStatusCodeException e) {
-            return null;
-        }
-    }
 }

@@ -1,8 +1,6 @@
 package com.pragma.restaurant.application.mapper.category;
 
-import com.pragma.restaurant.application.dto.response.category.CategoryByRestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.category.CategoryResponseDto;
-import com.pragma.restaurant.domain.model.CategoryByRestaurantsModel;
 import com.pragma.restaurant.domain.model.CategoryModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,8 +12,6 @@ public interface ICategoryResponseMapper {
 
     @Mapping(target = "dishesResponseDto", source = "dishesModel")
     CategoryResponseDto toResponse(CategoryModel categoryModel);
-
-    CategoryByRestaurantsResponseDto toResponseByRestaurants(CategoryByRestaurantsModel categoryModel);
 
     List<CategoryResponseDto> toResponseList(List<CategoryModel> categoryModelList);
 }

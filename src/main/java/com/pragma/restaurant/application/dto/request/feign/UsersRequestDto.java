@@ -1,4 +1,4 @@
-package com.pragma.restaurant.application.dto.request;
+package com.pragma.restaurant.application.dto.request.feign;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,6 @@
 package com.pragma.restaurant.application.handler.impl;
 
 import com.pragma.restaurant.application.dto.request.CategoryRequestDto;
-import com.pragma.restaurant.application.dto.response.category.CategoryByRestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.category.CategoryResponseDto;
 import com.pragma.restaurant.application.handler.ICategoryHandler;
 import com.pragma.restaurant.application.mapper.category.ICategoryRequestMapper;
@@ -31,8 +30,4 @@ public class CategoryHandler implements ICategoryHandler {
         return categoryServicePort.getAllCategory(page, records).map(categoryResponseMapper::toResponse);
     }
 
-    @Override
-    public Page<CategoryByRestaurantsResponseDto> getAllCategoriesByRestaurant() {
-        return categoryServicePort.getAllCategoryByRestaurant().map(categoryResponseMapper::toResponseByRestaurants);
-    }
 }

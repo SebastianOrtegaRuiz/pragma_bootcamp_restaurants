@@ -1,7 +1,6 @@
 package com.pragma.restaurant.infraestructure.input.rest;
 
 import com.pragma.restaurant.application.dto.request.CategoryRequestDto;
-import com.pragma.restaurant.application.dto.response.category.CategoryByRestaurantsResponseDto;
 import com.pragma.restaurant.application.dto.response.category.CategoryResponseDto;
 import com.pragma.restaurant.application.dto.response.ResponsePagedDto;
 import com.pragma.restaurant.application.handler.ICategoryHandler;
@@ -26,7 +25,6 @@ public class CategoryRestController {
 
     private final Pagination<CategoryResponseDto> pagination;
 
-    private final Pagination<CategoryByRestaurantsResponseDto> paginationByRestaurant;
 
     @ApiOperation(value = "Save a category")
     @PostMapping("/")
@@ -46,13 +44,4 @@ public class CategoryRestController {
         return ResponseEntity.ok(responsePagedDto);
     }
 
-    @ApiOperation(value = "test", response = List.class)
-    @GetMapping("/prueba")
-    public ResponseEntity<ResponsePagedDto<CategoryByRestaurantsResponseDto>> getAllCategoryByRestaurant() {
-        Page<CategoryByRestaurantsResponseDto> categoryByRestaurantsResponseDto = categoryHandler.getAllCategoriesByRestaurant();
-
-        ResponsePagedDto<CategoryByRestaurantsResponseDto> responsePagedDto = paginationByRestaurant.paginate(1, categoryByRestaurantsResponseDto);
-
-        return ResponseEntity.ok(responsePagedDto);
-    }
 }

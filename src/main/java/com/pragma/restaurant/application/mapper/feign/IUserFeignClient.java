@@ -1,6 +1,6 @@
 package com.pragma.restaurant.application.mapper.feign;
 
-import com.pragma.restaurant.application.dto.request.UsersRequestDto;
+import com.pragma.restaurant.application.dto.request.feign.UsersRequestDto;
 import com.pragma.restaurant.application.dto.response.feign.UserResponseDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;

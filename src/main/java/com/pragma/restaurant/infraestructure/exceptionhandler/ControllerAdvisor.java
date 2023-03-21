@@ -2,8 +2,9 @@ package com.pragma.restaurant.infraestructure.exceptionhandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.UnrecognizedPropertyException;
+import com.pragma.restaurant.domain.exception.NoValidName;
+import com.pragma.restaurant.domain.exception.NoValidNumber;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
-import com.pragma.restaurant.infraestructure.exception.NoValidNumber;
 import org.hibernate.PropertyValueException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +39,15 @@ public class ControllerAdvisor {
     @ExceptionHandler(NoValidNumber.class)
     public ResponseEntity<Map<String, String>> handleNoValidNumber(
             NoValidNumber ignoredNoValidNumber) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getValidMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getValidNumber()));
+    }
+
+    @ExceptionHandler(NoValidName.class)
+    public ResponseEntity<Map<String, String>> handleNoValidName(
+            NoValidName ignoredNoValidName) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(Collections.singletonMap(MESSAGE, ExceptionResponse.NO_DATA_FOUND.getValidName()));
     }
 
     /*@ResponseStatus(HttpStatus.BAD_REQUEST)

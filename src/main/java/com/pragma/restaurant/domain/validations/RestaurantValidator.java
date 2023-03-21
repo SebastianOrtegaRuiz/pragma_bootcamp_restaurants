@@ -7,9 +7,24 @@ import org.springframework.stereotype.Service;
 @Service
 public class RestaurantValidator {
 
-    public void validate(RestaurantsModel restaurantsModel) {
-        if(restaurantsModel.getName() == "") {
-            throw new NoDataFoundException();
+
+    public boolean isNumeric(String string) {
+        try {
+            Long.parseLong(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
+    }
+
+    public boolean validPhoneNumber(String string) {
+        if(string.length() <= 13) {
+            if (string.charAt(0) == '+') {
+                return isNumeric(string.substring(1, string.length()));
+            } else if (string.charAt(0) != '+') {
+                return isNumeric(string);
+            }
+        }
+        return false;
     }
 }

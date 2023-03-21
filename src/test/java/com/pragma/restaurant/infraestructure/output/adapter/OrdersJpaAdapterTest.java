@@ -4,7 +4,7 @@ import com.pragma.restaurant.domain.model.OrdersModel;
 import com.pragma.restaurant.infraestructure.exception.NoDataFoundException;
 import com.pragma.restaurant.infraestructure.output.entity.OrdersEntity;
 import com.pragma.restaurant.infraestructure.output.mapper.IOrdersEntityMapper;
-import com.pragma.restaurant.infraestructure.output.repository.IOrdersRepository;
+import com.pragma.restaurant.infraestructure.output.repository.orders.IOrdersRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;

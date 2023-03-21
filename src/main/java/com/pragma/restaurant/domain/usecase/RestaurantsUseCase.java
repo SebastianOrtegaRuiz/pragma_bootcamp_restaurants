@@ -1,6 +1,8 @@
 package com.pragma.restaurant.domain.usecase;
 
 import com.pragma.restaurant.domain.api.IRestaurantsServicePort;
+import com.pragma.restaurant.domain.exception.NoValidName;
+import com.pragma.restaurant.domain.exception.NoValidNumber;
 import com.pragma.restaurant.domain.model.RestaurantsModel;
 import com.pragma.restaurant.domain.spi.IRestaurantsPersistencePort;
 import com.pragma.restaurant.domain.validations.RestaurantValidator;
@@ -18,7 +20,12 @@ public class RestaurantsUseCase implements IRestaurantsServicePort {
 
     @Override
     public void saveRestaurants(RestaurantsModel restaurantsModel) {
-        //restaurantValidator.validate(restaurantsModel);
+        if(restaurantValidator.isNumeric(restaurantsModel.getName())){
+            throw new NoValidName();
+        }
+        if(!restaurantValidator.validPhoneNumber(restaurantsModel.getPhone())){
+            throw new NoValidNumber();
+        }
         restaurantsPersistencePort.saveRestaurants(restaurantsModel);
     }
 

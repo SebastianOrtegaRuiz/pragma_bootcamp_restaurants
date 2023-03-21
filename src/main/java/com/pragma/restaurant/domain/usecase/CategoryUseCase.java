@@ -1,13 +1,9 @@
 package com.pragma.restaurant.domain.usecase;
 
 import com.pragma.restaurant.domain.api.ICategoryServicePort;
-import com.pragma.restaurant.domain.model.CategoryByRestaurantsModel;
 import com.pragma.restaurant.domain.model.CategoryModel;
 import com.pragma.restaurant.domain.spi.ICategoryPersistencePort;
 import org.springframework.data.domain.Page;
-
-import java.util.Collection;
-import java.util.List;
 
 public class CategoryUseCase implements ICategoryServicePort {
 
@@ -27,8 +23,4 @@ public class CategoryUseCase implements ICategoryServicePort {
         return categoryPersistencePort.getAllCategory(page, records);
     }
 
-    @Override
-    public Page<CategoryByRestaurantsModel> getAllCategoryByRestaurant() {
-        return categoryPersistencePort.getAllCategoryByRestauran();
-    }
 }

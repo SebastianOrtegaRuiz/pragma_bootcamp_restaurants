@@ -1,6 +1,6 @@
 package com.pragma.restaurant.application.mapper.dishes;
 
-import com.pragma.restaurant.application.dto.request.DishesUpdateRequestDto;
+import com.pragma.restaurant.application.dto.request.dishes.DishesUpdateRequestDto;
 import com.pragma.restaurant.domain.model.DishesModel;
 import org.mapstruct.Mapper;
 
